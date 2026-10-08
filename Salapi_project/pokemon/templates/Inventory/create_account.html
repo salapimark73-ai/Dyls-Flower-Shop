@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Create account · Dyls Flower Shop</title>
+    <style>
+        :root { --ink:#292333; --muted:#756d80; --purple:#63439a; --line:#e5deec; --cream:#fbf9fd; }
+        * { box-sizing:border-box; }
+        body { min-height:100vh; margin:0; display:grid; place-items:center; padding:24px; background:var(--cream); color:var(--ink); font:15px/1.5 Georgia,serif; }
+        main { width:min(100%,460px); padding:34px; background:#fff; border:1px solid var(--line); border-radius:8px; box-shadow:0 18px 50px #3f2a590b; }
+        .brand { display:flex; align-items:center; gap:11px; margin-bottom:34px; color:var(--purple); font:800 20px/1.2 Georgia,serif; }
+        .mark { width:36px; height:36px; display:grid; place-items:center; border-radius:8px; background:var(--purple); color:white; }
+        h1 { margin:0 0 6px; font-size:32px; line-height:1.1; }
+        .intro { margin:0 0 26px; color:var(--muted); }
+        label { display:block; margin:16px 0 6px; font-weight:700; }
+        input { width:100%; padding:12px; border:1px solid #dbe5dd; border-radius:6px; color:var(--ink); font:15px Arial,sans-serif; }
+        button { width:100%; margin-top:24px; padding:12px; border:0; border-radius:6px; background:var(--purple); color:#fff; font:700 15px Arial,sans-serif; cursor:pointer; }
+        .help, .errorlist { margin:6px 0 0; color:var(--muted); font:13px/1.45 Arial,sans-serif; }
+        .help ul { margin:5px 0; padding-left:18px; }
+        .errorlist { padding:9px 11px; border-radius:6px; background:#fff1ef; color:#b42318; list-style:none; }
+        .login { margin:22px 0 0; text-align:center; color:var(--muted); }
+        .login a { color:var(--purple); font-weight:700; }
+        @media(max-width:480px) { main { padding:26px 22px; } }
+    </style>
+</head>
+<body>
+<main>
+    <div class="brand"><span class="mark">✿</span> Dyls Flower Shop</div>
+    <h1>Create your account</h1>
+    <p class="intro">Set up an account to start managing your flower inventory.</p>
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}<div class="help">{{ field.help_text|safe }}</div>{% endif %}
+            {% for error in field.errors %}<div class="errorlist">{{ error }}</div>{% endfor %}
+        {% endfor %}
+        <button type="submit">Create account</button>
+    </form>
+    <p class="login">Already have an account? <a href="{% url 'login' %}">Log in</a></p>
+</main>
+</body>
+</html>

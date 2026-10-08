@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Profile · Dyls Flower Shop</title>
+    <style>
+        :root { --ink:#292333; --muted:#756d80; --purple:#63439a; --pale:#f3edf9; --line:#e5deec; --cream:#fbf9fd; --gold:#b98237; }
+        * { box-sizing:border-box; }
+        body { min-height:100vh; margin:0; background:var(--cream); color:var(--ink); font:15px/1.5 Georgia,serif; }
+        main { width:min(100% - 32px,760px); margin:0 auto; padding:30px 0 56px; }
+        header { display:flex; align-items:center; justify-content:space-between; margin-bottom:46px; }
+        .brand { display:flex; align-items:center; gap:11px; color:var(--purple); font:800 20px/1.2 Georgia,serif; }
+        .mark { width:36px; height:36px; display:grid; place-items:center; border-radius:8px; background:var(--purple); color:white; }
+        a { color:var(--purple); text-decoration:none; font-weight:700; }
+        .back { padding:10px 0; }
+        .eyebrow { margin:0 0 8px; color:var(--gold); font:700 12px/1.4 Arial,sans-serif; text-transform:uppercase; }
+        h1 { margin:0 0 25px; font-size:38px; line-height:1.1; }
+        .profile { display:flex; align-items:center; gap:20px; padding:26px; border:1px solid var(--line); border-radius:8px; background:white; }
+        .avatar { flex:0 0 64px; width:64px; height:64px; display:grid; place-items:center; border-radius:50%; background:var(--pale); color:var(--purple); font:bold 26px/1 Arial,sans-serif; }
+        .label { margin:0 0 4px; color:var(--muted); font:700 12px/1.4 Arial,sans-serif; text-transform:uppercase; }
+        .username { margin:0; overflow-wrap:anywhere; font-size:23px; font-weight:700; }
+        .actions { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:24px; }
+        .button { display:inline-block; padding:11px 16px; border:0; border-radius:8px; background:var(--purple); color:white; font:700 14px Arial,sans-serif; cursor:pointer; }
+        .button.secondary { border:1px solid var(--line); background:white; color:var(--purple); }
+        @media(max-width:480px) { main { padding-top:20px; } header { margin-bottom:34px; } h1 { font-size:32px; } .profile { padding:20px; } .actions { align-items:stretch; flex-direction:column; } .button { text-align:center; } }
+    </style>
+</head>
+<body>
+<main>
+    <header>
+        <div class="brand"><span class="mark">✿</span> Dyls Flower Shop</div>
+        <a class="back" href="{% url 'index' %}">Back to inventory</a>
+    </header>
+    <p class="eyebrow">Account</p>
+    <h1>Your profile</h1>
+    <section class="profile">
+        <div class="avatar" aria-hidden="true">{{ request.user.username|first|upper }}</div>
+        <div><p class="label">Username</p><p class="username">{{ request.user.username }}</p></div>
+    </section>
+    <div class="actions">
+        <a class="button secondary" href="{% url 'index' %}">Return to dashboard</a>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button class="button" type="submit">Log out</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% if flower %}Edit{% else %}Add{% endif %} flower · Dyls Flower Shop</title>
+    <style>
+        :root{--ink:#292333;--muted:#756d80;--purple:#63439a;--line:#e5deec;--cream:#fbf9fd}*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font:15px/1.5 Georgia,serif}.wrap{max-width:700px;margin:auto;padding:30px 24px 60px}a{color:var(--purple);text-decoration:none;font-weight:700}.back{display:inline-block;margin-bottom:35px}.card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:30px;box-shadow:0 5px 20px #3f2a590b}h1{font:700 38px/1.1 Georgia,serif;margin:0 0 8px}.lead{color:var(--muted);margin:0 0 28px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}label{font-weight:700;font-size:13px}input,select,textarea{width:100%;border:1px solid #d8cfe3;border-radius:8px;padding:11px 12px;color:var(--ink);background:#fff;font:inherit}textarea{resize:vertical}.errorlist{color:#b42318;margin:0;font-size:13px;padding-left:18px}.actions{display:flex;gap:10px;justify-content:flex-end;margin-top:28px}.button{border:0;border-radius:8px;padding:12px 18px;background:var(--purple);color:#fff;font:700 15px inherit;cursor:pointer}.cancel{padding:12px 18px}@media(max-width:560px){.grid{grid-template-columns:1fr}.field.full{grid-column:auto}}
+    </style>
+</head>
+<body><main class="wrap">
+    <a class="back" href="{% url 'index' %}">← Back to inventory</a>
+    <section class="card"><h1>{% if flower %}Edit flower{% else %}Add a flower{% endif %}</h1><p class="lead">{% if flower %}Update the details below and save your changes.{% else %}Save a new flower model to your inventory.{% endif %}</p>
+    <form method="post" novalidate>{% csrf_token %}<div class="grid">
+        {% for field in form %}<div class="field {% if field.name == 'description' %}full{% endif %}"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% for error in field.errors %}<div class="errorlist">{{ error }}</div>{% endfor %}</div>{% endfor %}
+    </div><div class="actions"><a class="cancel" href="{% url 'index' %}">Cancel</a><button class="button" type="submit">Save flower</button></div></form>
+    </section>
+</main></body></html>
